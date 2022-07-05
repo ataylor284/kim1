@@ -207,33 +207,33 @@ fail_msg:
 ; turn base 64 char in range A-Za-z0-9+/ and padding char '=' into
 ; 6-bit value it represents
 base64_value_for_encoded_char:
-        cmp #'+'
-        bne not_plus
-        lda #62
-        rts
-not_plus:
         cmp #'/'
-        bne not_slash
-        lda #63
-        rts
-not_slash:
-        cmp #'9'+1
-        bcs not_digit
-        ;clc                    ; carry is clear
-        adc #4
-        rts
-not_digit:
+        beq is_slash
+        bcc is_plus
+not_plus_or_slash:
         cmp #'='
-        bne not_equals
-        lda #0
-        rts
-not_equals:
+        beq is_equals
+        bcc is_digit
+not_equals_or_digit:
         cmp #'Z'+1
-        bcs not_uppercase
+        bcs lowercase
         ;sec                    ; minus 1 since carry is clear
         sbc #'A'-1
         rts
-not_uppercase:
+lowercase:
         ;sec                    ; carry is set
         sbc #'a'-26
+        rts
+is_slash:
+        lda #63
+        rts
+is_plus:
+        lda #62
+        rts
+is_equals:
+        lda #0
+        rts
+is_digit:
+        ;clc                    ; carry is clear
+        adc #4
         rts

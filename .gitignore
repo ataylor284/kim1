@@ -1,0 +1,8 @@
+*.o
+*.lst
+*.lbl
+*.map
+*.bin
+*.ptp
+*~
+bin/
