@@ -62,8 +62,7 @@ verify_entry:
 loadbase64:
         jsr GETCH
         cmp #'@'
-        beq found_header
-        jmp loadbase64
+        bne loadbase64
 found_header:
         jsr GETBYT              ; count
         tax
@@ -83,7 +82,6 @@ load_loop:
         dex
         dex
         dex
-        txa
         beq loadbase64
         bmi loadbase64
         bne load_loop
@@ -101,7 +99,7 @@ zero_len_line_found:
 ; out3 = in4, with bottom 2 bits in3 rotated into top
 ; 
 ; todo - get rid of temp output bytes?
-decode_4_to_3:
+.proc decode_4_to_3
         jsr GETCH               ; in1
         jsr base64_value_for_encoded_char
         sta output_byte1        
@@ -182,8 +180,15 @@ fail:   lda failed
         sta fail_loc+1
 fail_done:
         rts
+.endproc
 
-report_failures:
+; -----------------------------------------------------------------------------
+; report failures that occured during verify with address of first bad byte
+.data
+fail_msg:
+        .byte 10, 13, "verify failed at $", 0
+.code
+.proc report_failures
         lda failed
         beq report_failures_done
         ldx #0
@@ -200,13 +205,12 @@ print_fail_addr:
         jsr PRTBYT
 report_failures_done:
         rts
-fail_msg:
-        .byte 10, 13, "verify failed at $", 0
+.endproc
 
 ; -----------------------------------------------------------------------------
 ; turn base 64 char in range A-Za-z0-9+/ and padding char '=' into
 ; 6-bit value it represents
-base64_value_for_encoded_char:
+.proc base64_value_for_encoded_char
         cmp #'/'
         beq is_slash
         bcc is_plus
@@ -237,3 +241,4 @@ is_digit:
         ;clc                    ; carry is clear
         adc #4
         rts
+.endproc
