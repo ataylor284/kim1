@@ -1,11 +1,5 @@
-POINTL := $FA
-POINTH := $FB
-PRTBYT := $1E3B
-GETCH  := $1E5A
-OUTCH  := $1EA0
-SCAND  := $1F19
-INCPT  := $1F63
-GETBYT := $1F9D
+.include "kim1.inc"
+
 ; -----------------------------------------------------------------------------
 ; older 6502s from the original KIM-1 era might have buggy ROR
 ; instruction; in that case use lsr and manually OR in carry to high
@@ -52,7 +46,7 @@ fail_loc:        .res 2
 .code
 entry:
         ldx #0
-        .byte $2c
+        .byte $2c               ; skip 2 bytes
 verify_entry: 
         ldx #1
         stx verify

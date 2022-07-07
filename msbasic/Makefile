@@ -1,12 +1,11 @@
 .PHONY: clean all msbasic
 
-ROOT=..
-include $(ROOT)/kim_defs.mk
+include ../kim_defs.mk
 
 PTP_LOAD_ADDR=0x2000
 
 all: msbasic-kb9.ptp
-	cp *.ptp *.bin $(ROOT)/bin
+	cp *.ptp *.bin $(ROOT)bin
 
 msbasic-kb9.bin:
 	(cd msbasic && ./make.sh)

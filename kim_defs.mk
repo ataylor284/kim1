@@ -1,8 +1,11 @@
 # simple rules for building kim binaries and paper tape files using the cc65 tools and srec_cat from srecord
 
+ROOT = $(dir $(lastword $(MAKEFILE_LIST)))
+INCLUDE=$(ROOT)include
+
 AS=ca65
 LD=ld65
-ASFLAGS=
+ASFLAGS=-I$(INCLUDE)
 LDFLAGS=--target none 
 PTP_LOAD_ADDR=0x0200
 
