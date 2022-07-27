@@ -1,6 +1,6 @@
 ;;; print hello world! on the tty
 
-OUTCH := $1EA0
+.include "kim1.inc"
 
 .org $0200
 

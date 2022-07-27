@@ -1,8 +1,6 @@
 ;;; print HELLO on 7-segment display
 
-SAD    := $1740
-PADD   := $1741
-SBD    := $1742
+.include "kim1.inc"
 
 .org $0200
 

@@ -1,9 +1,6 @@
 ;;; print 123456 on 7-segment display
 
-INH    := $F9
-POINTL := $FA
-POINTH := $FB
-SCANDS := $1F1F
+.include "kim1.inc"
 
 .org $0200
 
